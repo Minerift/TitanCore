@@ -3,7 +3,13 @@ package org.avaeriandev.api.panel;
 import org.avaeriandev.api.util.BaseUtils;
 import org.avaeriandev.titancore.TitanPlugin;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 
@@ -30,6 +36,48 @@ public abstract class Panel implements Listener {
         Bukkit.getPluginManager().registerEvents(this, TitanPlugin.getInstance());
     }
 
+    protected void loadLayout(Map<Integer, PanelIcon> rawLayout) {
+        for(Map.Entry<Integer, PanelIcon> entry : rawLayout.entrySet()) {
+            int slot = entry.getKey() - 1;
+            PanelIcon icon = entry.getValue();
 
+            layout.put(slot, icon);
+            panel.setItem(slot, icon.getIcon());
+        }
+    }
+
+    public Inventory getPanel() {
+        return panel;
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent e) {
+
+        Player plr = (Player) e.getWhoClicked();
+
+        // Don't handle inventory if not panel
+        if(!e.getInventory().equals(panel)) return;
+
+        // Close panel if click is outside
+        if(e.getSlotType() == InventoryType.SlotType.OUTSIDE) {
+            plr.closeInventory();
+            return;
+        }
+
+        // Handle panel click
+        if(layout.containsKey(e.getRawSlot())) {
+            PanelIcon icon = layout.get(e.getRawSlot());
+            if(icon.getScript() != null) icon.getScript().run(plr);
+        }
+
+        e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent e) {
+        if(e.getInventory().equals(panel)) {
+            HandlerList.unregisterAll(this);
+        }
+    }
 
 }
