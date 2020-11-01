@@ -1,0 +1,5 @@
+main: org.avaeriandev.titancore.TitanPlugin
+name: ${project.name}
+version: ${project.version}
+author: AvaerianDev
+description: ${project.version}
