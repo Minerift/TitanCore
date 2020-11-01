@@ -7,21 +7,19 @@ import org.bukkit.inventory.ItemStack;
 public class ItemRequirement extends Requirement {
 
     private ItemStack item;
-    private int count;
 
-    public ItemRequirement(ItemStack item, int count) {
+    public ItemRequirement(ItemStack item) {
         this.item = item;
-        this.count = count;
     }
 
     @Override
     public boolean meetsRequirement(Player plr) {
-        return plr.getInventory().contains(item, count);
+        return plr.getInventory().contains(item, item.getAmount());
     }
 
     @Override
     public void removeRequirement(Player plr) {
-        int amountRemaining = count;
+        int amountRemaining = item.getAmount();
         int currentSlotIndex = 0;
 
         while(true) {
