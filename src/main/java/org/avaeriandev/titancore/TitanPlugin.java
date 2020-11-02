@@ -23,6 +23,31 @@ public class TitanPlugin extends JavaPlugin {
         instance = this;
 
         registerQuest(QuestType.E_WOOD);
+        registerQuest(QuestType.E_LEATHER);
+        registerQuest(QuestType.E_MINE);
+        registerQuest(QuestType.E_VOODOO);
+
+        registerQuest(QuestType.D_CONDUCTOR);
+        registerQuest(QuestType.D_MIA_STONER);
+        registerQuest(QuestType.D_STANKY_JAMES);
+
+        registerQuest(QuestType.C_COOK_CHEF);
+        registerQuest(QuestType.C_COOK_BOY);
+        registerQuest(QuestType.C_COOK_ARE);
+        registerQuest(QuestType.C_COOK_DEE);
+        registerQuest(QuestType.C_WILE_E);
+        registerQuest(QuestType.C_KURT_THROAT);
+        registerQuest(QuestType.C_JOHNY_APPLEPOOP);
+
+        registerQuest(QuestType.B_DESIGNER_DICK);
+        registerQuest(QuestType.B_DIRTY_DAN);
+        registerQuest(QuestType.B_DJ_MINOR);
+        registerQuest(QuestType.B_FRANCIS);
+        registerQuest(QuestType.B_BENRY);
+        registerQuest(QuestType.B_GUSTOV);
+
+        registerQuest(QuestType.A_DOOD);
+        registerQuest(QuestType.A_MINER);
 
         registerListener(new PlayerJoinListener());
         registerListener(new PlayerQuitListener());
