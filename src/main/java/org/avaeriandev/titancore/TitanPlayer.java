@@ -44,6 +44,7 @@ public class TitanPlayer {
     }
 
     private TitanPlayer(Player plr, int tickets, Map<Integer, Long> activatedQuests, Map<Integer, Long> completedQuests) {
+        // TODO: move file loader to from static load() to constructor
         this.tickets = tickets;
         this.activatedQuests = activatedQuests;
         this.completedQuests = completedQuests;
