@@ -2,11 +2,12 @@ package org.avaeriandev.titancore.quest;
 
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class QuestAPI {
 
-    private static Map<Integer, Quest> registeredQuests;
+    private static Map<Integer, Quest> registeredQuests = new HashMap<>();
 
     public static void registerQuest(int identifier, Quest quest) {
         if(registeredQuests.containsKey(identifier)) {

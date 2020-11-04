@@ -1,9 +1,12 @@
 package org.avaeriandev.titancore;
 
+import org.avaeriandev.titancore.auction.AuctionListing;
+import org.avaeriandev.titancore.auction.AuctionSystem;
+import org.avaeriandev.titancore.auction.AuctionSignListener;
 import org.avaeriandev.titancore.commands.QuestCommand;
+import org.avaeriandev.titancore.commissary.CommissarySignListener;
 import org.avaeriandev.titancore.listeners.PlayerJoinListener;
 import org.avaeriandev.titancore.listeners.PlayerQuitListener;
-import org.avaeriandev.titancore.quest.Quest;
 import org.avaeriandev.titancore.quest.QuestAPI;
 import org.avaeriandev.titancore.quests.QuestType;
 import org.bukkit.Bukkit;
@@ -12,16 +15,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class TitanPlugin extends JavaPlugin {
 
     private static TitanPlugin instance;
 
-    public final static File plrDataDir = new File(instance.getDataFolder(), "playerData");
+    public static File plrDataDir;
 
     public void onEnable() {
         instance = this;
+        plrDataDir = new File(instance.getDataFolder(), "playerData");
 
+        // Register core quests
         registerQuest(QuestType.E_WOOD);
         registerQuest(QuestType.E_LEATHER);
         registerQuest(QuestType.E_MINE);
@@ -49,15 +55,33 @@ public class TitanPlugin extends JavaPlugin {
         registerQuest(QuestType.A_DOOD);
         registerQuest(QuestType.A_MINER);
 
+        // Register auction listeners
+        registerListener(new AuctionSystem());
+        registerListener(new AuctionSignListener());
+
+        AuctionSystem.load();
+
+        // Register other listeners
         registerListener(new PlayerJoinListener());
         registerListener(new PlayerQuitListener());
 
-        registerCommand("quest", new QuestCommand());
+        registerListener(new CommissarySignListener());
+
+        //registerCommand("quest", new QuestCommand());
 
     }
 
     public void onDisable() {
 
+        // Delete auction chests
+        for(AuctionListing listing : new ArrayList<>(AuctionSystem.listings)) {
+            if (listing.isOnDeletionTimer()) {
+                listing.getDeletionTimer().cancel();
+                listing.delete();
+            }
+        }
+
+        AuctionSystem.save();
     }
 
     private void registerListener(Listener listener) {
