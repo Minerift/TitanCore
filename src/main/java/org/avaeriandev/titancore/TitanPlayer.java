@@ -28,7 +28,15 @@ public class TitanPlayer {
         return serialMap;
     }
     
-    public TitanPlayer(Map<String, Object> serialMap) {
+    public static TitanPlayer deserialize(Map<String, Object> serialMap) {
+        
+        TitanPlayer titanPlayer = null;
+        if(serialMap != null && !serialMap.isEmpty()) titanPlayer = new TitanPlayer(serialMap);
+        return titanPlayer;
+        
+    }
+    
+    private TitanPlayer(Map<String, Object> serialMap) {
         this.plr = Bukkit.getOfflinePlayer(UUID.fromString((String) serialMap.get("uuid")));
         this.tickets = (int) serialMap.get("tickets");
         this.activatedQuests = (Map<Integer, Long>) serialMap.get("activated-quests");
