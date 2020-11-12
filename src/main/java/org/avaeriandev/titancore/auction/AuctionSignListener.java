@@ -56,7 +56,7 @@ public class AuctionSignListener implements Listener {
                             plr.sendMessage(BaseUtils.chat("&cYou don't have enough money to purchase this listing."));
 
                         }
-                    } else if(listing.getOwner().equals(plr)) {
+                    } else if(listing.getOwner().equals(plr.getUniqueId())) {
 
                         Chest chest = (Chest) listing.getChest().getState();
 

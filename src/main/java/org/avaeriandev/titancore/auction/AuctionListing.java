@@ -13,6 +13,8 @@ import org.bukkit.scheduler.BukkitTask;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class AuctionListing {
 
@@ -20,7 +22,7 @@ public class AuctionListing {
     private Block sign;
 
     private int price;
-    private OfflinePlayer owner;
+    private UUID owner;
 
     private transient BukkitTask deletionTimer;
     private transient boolean isOnDeletionTimer;
@@ -54,7 +56,7 @@ public class AuctionListing {
         return price;
     }
 
-    public OfflinePlayer getOwner() {
+    public UUID getOwner() {
         return owner;
     }
 
@@ -77,14 +79,14 @@ public class AuctionListing {
     }
 
     public void purchase(OfflinePlayer buyer) {
-        this.owner = buyer;
+        this.owner = buyer.getUniqueId();
         this.isOnDeletionTimer = true;
         this.deletionTimer = new BukkitRunnable() {
             @Override
             public void run() {
                 delete();
             }
-        }.runTaskLater(TitanPlugin.getInstance(), 5 * 20); //TimeUnit.MINUTES.toSeconds(2)
+        }.runTaskLater(TitanPlugin.getInstance(), TimeUnit.MINUTES.toSeconds(2) * 20);
     }
 
     public void delete() {
