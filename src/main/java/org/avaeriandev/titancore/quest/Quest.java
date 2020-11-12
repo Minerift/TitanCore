@@ -3,10 +3,7 @@ package org.avaeriandev.titancore.quest;
 import org.avaeriandev.titancore.quest.requirements.Requirement;
 import org.avaeriandev.titancore.quest.rewards.Reward;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.logging.LogRecord;
 
 public class Quest {
 
@@ -14,12 +11,14 @@ public class Quest {
     private List<String> lore;
     private List<? extends Requirement> requirements;
     private List<? extends Reward> rewards;
+    private int ticketRedoCost;
 
-    public Quest(String name, List<String> lore, List<? extends Requirement> requirements, List<? extends Reward> rewards) {
+    public Quest(String name, List<String> lore, List<? extends Requirement> requirements, List<? extends Reward> rewards, int ticketRedoCost) {
         this.name = name;
         this.lore = lore;
         this.requirements = requirements;
         this.rewards = rewards;
+        this.ticketRedoCost = ticketRedoCost;
     }
 
     public String getName() {
@@ -37,4 +36,9 @@ public class Quest {
     public List<? extends Reward> getRewards() {
         return rewards;
     }
+
+    public int getTicketRedoCost() {
+        return ticketRedoCost;
+    }
+
 }

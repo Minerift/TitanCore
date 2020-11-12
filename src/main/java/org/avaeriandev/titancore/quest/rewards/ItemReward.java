@@ -11,6 +11,10 @@ public class ItemReward extends Reward {
         this.item = item;
     }
 
+    public ItemStack getItem() {
+        return item;
+    }
+
     @Override
     public void rewardPlayer(Player plr) {
         plr.getInventory().addItem(item);
