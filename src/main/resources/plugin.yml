@@ -2,4 +2,19 @@ main: org.avaeriandev.titancore.TitanPlugin
 name: ${project.name}
 version: ${project.version}
 author: AvaerianDev
-description: ${project.version}
+description: ${project.description}
+
+depend: [PlaceholderAPI]
+
+commands:
+  commissary:
+    description: Access the commissary panel
+  warden:
+    description: Access the warden panel
+  ticket:
+    aliases: [tickets, tix]
+    description: Modify tickets for a user
+  quest:
+    description: Access the quest system
+  fw:
+    description: Play fireworks effect on player
