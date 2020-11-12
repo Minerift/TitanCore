@@ -1,4 +1,4 @@
-package org.avaeriandev.titancore.commands;
+package org.avaeriandev.titancore.commissary;
 
 import org.avaeriandev.api.util.BaseUtils;
 import org.avaeriandev.titancore.commissary.CommissaryPanel;

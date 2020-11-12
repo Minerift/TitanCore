@@ -2,8 +2,8 @@ package org.avaeriandev.titancore.commissary;
 
 import org.avaeriandev.api.panel.IconScript;
 import org.avaeriandev.api.util.BaseUtils;
-import org.avaeriandev.titancore.TitanAPI;
 import org.avaeriandev.titancore.TitanPlayer;
+import org.avaeriandev.titancore.TitanPlayerAPI;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -19,7 +19,7 @@ public class PurchaseScript implements IconScript {
     @Override
     public void run(Player plr) {
 
-        TitanPlayer titanPlayer = TitanAPI.getTitanPlayer(plr);
+        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
         if(titanPlayer.getTickets() >= tier.getTicketPrice()) {
 
             // Purchase pass with tickets

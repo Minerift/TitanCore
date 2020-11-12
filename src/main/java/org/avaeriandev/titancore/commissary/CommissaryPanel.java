@@ -23,11 +23,11 @@ public class CommissaryPanel extends Panel {
 
         Map<Integer, PanelIcon> layout = new HashMap<>();
 
-        PanelIcon purchaseC1 = new PanelIcon("&aConfirm", new ItemStack(Material.WOOL, 1), new PurchaseScript(CommissaryTier.C1));
-        PanelIcon purchaseC2 = new PanelIcon("&aConfirm", new ItemStack(Material.WOOL, 1), new PurchaseScript(CommissaryTier.C2));
-        PanelIcon purchaseC3 = new PanelIcon("&aConfirm", new ItemStack(Material.WOOL, 1), new PurchaseScript(CommissaryTier.C3));
+        PanelIcon purchaseC1 = new PanelIcon("&aConfirm", new ItemStack(Material.WOOL, 1, (byte) 5), new PurchaseScript(CommissaryTier.C1));
+        PanelIcon purchaseC2 = new PanelIcon("&aConfirm", new ItemStack(Material.WOOL, 1, (byte) 5), new PurchaseScript(CommissaryTier.C2));
+        PanelIcon purchaseC3 = new PanelIcon("&aConfirm", new ItemStack(Material.WOOL, 1, (byte) 5), new PurchaseScript(CommissaryTier.C3));
 
-        PanelIcon cancel = new PanelIcon("&cCancel", new ItemStack(Material.WOOL, 1), new IconScript() {
+        PanelIcon cancel = new PanelIcon("&cCancel", new ItemStack(Material.WOOL, 1, (byte) 14), new IconScript() {
             @Override
             public void run(Player plr) {
                 plr.closeInventory();
