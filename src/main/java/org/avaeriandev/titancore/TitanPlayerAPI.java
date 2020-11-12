@@ -1,8 +1,16 @@
 package org.avaeriandev.titancore;
 
+import org.avaeriandev.api.util.BaseUtils;
+import org.avaeriandev.titancore.quest.QuestData;
+import org.avaeriandev.titancore.quests.QuestEnum;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.yaml.snakeyaml.Yaml;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TitanPlayerAPI {
@@ -11,57 +19,66 @@ public class TitanPlayerAPI {
     private static Yaml yaml = new Yaml();
 
     public static TitanPlayer get(OfflinePlayer plr) {
-        return playerData.get(plr);
+        return titanPlayerDictionary.get(plr);
     }
     
     public static TitanPlayer load(OfflinePlayer plr) {
         
         // Prevent player from being loaded multiple times
-        if(titanPlayerDictionary.contains(plr)) {
+        if(titanPlayerDictionary.containsKey(plr)) {
             System.out.println(plr.getName() + " has already been loaded!");
-            return;
+            return null;
         }
         
         // Obtain file from file name format
         File saveFile = getDataFileFromFormat(plr);
         if(saveFile == null) {
             System.err.println("Player data for " + plr.getName() + " was unable to be retrieved from file!");
-            return;
+            return null;
         }
         
         // Read data from file
-        Map<String, Object> serialMap = (Map<String, Object>) yaml.load(new FileReader(saveFile));
-        
+        Map<String, Object> serialMap;
+        try {
+            serialMap = (Map<String, Object>) yaml.load(new FileReader(saveFile));
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
         // Attempt to load to TitanPlayer object
-        TitanPlayer titanPlayer = TitanPlayer.deserialize(serialMap);
+        TitanPlayer titanPlayer = TitanPlayer.deserialize(plr, serialMap);
         if(titanPlayer == null) {
             System.err.println(plr.getName() + " failed to load!");
-            return;
+            return null;
         }
         
         // Store in dictionary to be accessed later
         titanPlayerDictionary.put(plr, titanPlayer);
-        
+        return titanPlayer;
     }
     
     public static void unload(OfflinePlayer plr) {
-        playerData.remove(plr);
+        titanPlayerDictionary.remove(plr);
     }
     
     public static void save(OfflinePlayer plr) {
         
-        TitanPlayer titanPlayer = get(plr);
+        TitanPlayer titanPlayer = titanPlayerDictionary.get(plr);
         File saveFile = getDataFileFromFormat(plr);
         if(saveFile == null) {
             System.err.println("Player data for " + plr.getName() + " was unable to be dumped to file!");
             return;
         }
-            
+
         Map<String, Object> serialMap = titanPlayer.serialize();
-        
-        yaml.dump(serialMap, new FileWriter(saveFile));
-        
-        
+
+        try {
+            yaml.dump(serialMap, new FileWriter(saveFile));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return;
+        }
     }
     
     private static File getDataFileFromFormat(OfflinePlayer plr) {
@@ -80,4 +97,25 @@ public class TitanPlayerAPI {
         return saveFile;
     }
 
+    public static void checkQuestStateExpiration() {
+
+        // Iterate every player on server
+        for(TitanPlayer titanPlayer : titanPlayerDictionary.values()) {
+
+            Player plr = titanPlayer.getPlayer().getPlayer();
+
+            // Iterate through all quests active and/or completed
+            Map<QuestEnum, QuestData> questDataMap = titanPlayer.getQuestDataMap();
+            for(Map.Entry<QuestEnum, QuestData> questDataEntry : new ArrayList<>(questDataMap.entrySet())) {
+                QuestEnum questEnum = questDataEntry.getKey();
+                QuestData questData = questDataEntry.getValue();
+
+                // Verify if quest has expired
+                if(System.currentTimeMillis() >= questData.getStateExpireTimestamp()) {
+                    // Set state as inactive
+                    titanPlayer.getQuestDataMap().remove(questEnum);
+                }
+            }
+        }
+    }
 }
