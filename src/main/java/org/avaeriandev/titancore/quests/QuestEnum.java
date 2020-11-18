@@ -109,19 +109,19 @@ public enum QuestEnum {
     B_DESIGNER_DICK(new Quest("Designer Dick",
             Arrays.asList("Enter this hole to get to the mine!", "I need some lapis blocks to make this place fine!", "I can't pay a lot, but I can offer other", "compensation..."),
             Arrays.asList(new ItemRequirement(new ItemStack(Material.LAPIS_BLOCK), 11)),
-            Arrays.asList(new MoneyReward(14000)),
+            Arrays.asList(new MoneyReward(140000)),
             300
     )),
     B_DIRTY_DAN(new Quest("Dirty Dan",
             Arrays.asList("I've been reselling clocks to people", "but i'm running low on stock", "Can you get me some more?"),
             Arrays.asList(new ItemRequirement(new ItemStack(Material.WATCH), 25)),
-            Arrays.asList(new MoneyReward(14000)),
+            Arrays.asList(new MoneyReward(140000)),
             300
     )),
     B_DJ_MINOR(new Quest("DJ Minor",
             Arrays.asList("We've got some tunes but no speakers", "Get me something to blast these tunes", "with."),
             Arrays.asList(new ItemRequirement(new ItemStack(Material.JUKEBOX), 32)),
-            Arrays.asList(new MoneyReward(14000)),
+            Arrays.asList(new MoneyReward(140000)),
             300
     )),
     B_FRANCIS(new Quest("Francis",
