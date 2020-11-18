@@ -4,7 +4,7 @@ version: ${project.version}
 author: AvaerianDev
 description: ${project.description}
 
-depend: [PlaceholderAPI]
+depend: [NBTAPI, EZBlocks, PlaceholderAPI, WorldGuard]
 
 commands:
   commissary:
@@ -18,3 +18,8 @@ commands:
     description: Access the quest system
   fw:
     description: Play fireworks effect on player
+  rifttool:
+    aliases: [rifttools]
+    description: Give a custom tool to a player
+  enchanter:
+    description: Access the enchanter panel

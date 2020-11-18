@@ -6,11 +6,10 @@ import org.avaeriandev.titancore.auction.AuctionSystem;
 import org.avaeriandev.titancore.auction.AuctionSignListener;
 import org.avaeriandev.titancore.commissary.CommissaryCommand;
 import org.avaeriandev.titancore.commissary.CommissarySignListener;
-import org.avaeriandev.titancore.listeners.BlockBreakListener;
-import org.avaeriandev.titancore.listeners.PVPListener;
-import org.avaeriandev.titancore.listeners.PlayerJoinListener;
-import org.avaeriandev.titancore.listeners.PlayerQuitListener;
+import org.avaeriandev.titancore.enchanter.EnchanterCommand;
+import org.avaeriandev.titancore.listeners.*;
 import org.avaeriandev.titancore.quests.QuestCommand;
+import org.avaeriandev.titancore.tools.ToolCommand;
 import org.avaeriandev.titancore.warden.FireworksCommand;
 import org.avaeriandev.titancore.warden.WardenCommand;
 import org.bukkit.Bukkit;
@@ -57,15 +56,18 @@ public class TitanPlugin extends JavaPlugin {
         registerListener(new PlayerQuitListener());
         registerListener(new BlockBreakListener());
         registerListener(new PVPListener());
+        registerListener(new PlayerDeathListener());
 
         registerListener(new CommissarySignListener());
 
         // Register commands
         registerCommand("commissary", new CommissaryCommand());
         registerCommand("warden", new WardenCommand());
+        registerCommand("enchanter", new EnchanterCommand());
         registerCommand("ticket", new TicketCommand());
         registerCommand("quest", new QuestCommand());
         registerCommand("fw", new FireworksCommand());
+        registerCommand("rifttool", new ToolCommand());
 
         // Register placeholders
         new Placeholders().register();
