@@ -37,6 +37,11 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder setUnbreakable(boolean unbreakable) {
+        meta.spigot().setUnbreakable(unbreakable);
+        return this;
+    }
+
     public ItemMeta getItemMeta() {
         return meta;
     }
