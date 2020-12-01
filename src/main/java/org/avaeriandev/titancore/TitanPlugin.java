@@ -4,13 +4,13 @@ import org.avaeriandev.titancore.api.external.Placeholders;
 import org.avaeriandev.titancore.auction.AuctionListing;
 import org.avaeriandev.titancore.auction.AuctionSystem;
 import org.avaeriandev.titancore.auction.AuctionSignListener;
+import org.avaeriandev.titancore.commands.*;
 import org.avaeriandev.titancore.commissary.CommissaryCommand;
 import org.avaeriandev.titancore.commissary.CommissarySignListener;
 import org.avaeriandev.titancore.enchanter.EnchanterCommand;
 import org.avaeriandev.titancore.listeners.*;
 import org.avaeriandev.titancore.quests.QuestCommand;
 import org.avaeriandev.titancore.tools.ToolCommand;
-import org.avaeriandev.titancore.warden.FireworksCommand;
 import org.avaeriandev.titancore.warden.WardenCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -57,6 +57,7 @@ public class TitanPlugin extends JavaPlugin {
         registerListener(new BlockBreakListener());
         registerListener(new PVPListener());
         registerListener(new PlayerDeathListener());
+        registerListener(new OpenPresentListener());
 
         registerListener(new CommissarySignListener());
 
@@ -68,6 +69,10 @@ public class TitanPlugin extends JavaPlugin {
         registerCommand("quest", new QuestCommand());
         registerCommand("fw", new FireworksCommand());
         registerCommand("rifttool", new ToolCommand());
+        registerCommand("xmas", new XmasItemCommand());
+
+        registerCommand("speed", new SpeedCommand());
+        registerCommand("haste", new HasteCommand());
 
         // Register placeholders
         new Placeholders().register();
