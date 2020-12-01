@@ -4,6 +4,7 @@ import org.avaeriandev.api.panel.IconScript;
 import org.avaeriandev.api.panel.Panel;
 import org.avaeriandev.api.panel.PanelIcon;
 import org.avaeriandev.api.util.BaseUtils;
+import org.avaeriandev.api.util.ItemBuilder;
 import org.avaeriandev.titancore.TitanPlayer;
 import org.avaeriandev.titancore.quest.Quest;
 import org.avaeriandev.titancore.quest.QuestData;
@@ -12,7 +13,9 @@ import org.avaeriandev.titancore.quest.requirements.ItemRequirement;
 import org.avaeriandev.titancore.quest.requirements.Requirement;
 import org.avaeriandev.titancore.quest.rewards.MoneyReward;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -69,13 +72,9 @@ public class QuestPanel extends Panel {
                 titanPlayer.getQuestDataMap().put(questData.getQuestEnum(), questData);
 
                 // Notify player
-                // TODO: REMOVE HARDCODED CODE
-                for(Requirement requirement : quest.getRequirements()) {
-                    ItemRequirement itemRequirement = (ItemRequirement) requirement;
-
-                    String item = itemRequirement.getItem().getType().name().toLowerCase().replaceAll("_", " ");
-                    plr.sendMessage(BaseUtils.chat("&2Bring me " + itemRequirement.getAmount() + " " + item + "."));
-                }
+                plr.sendMessage(BaseUtils.chat("&aYou activated this &a&lchallenge!"));
+                plr.playSound(plr.getLocation(), Sound.HORSE_ARMOR, 1, 1);
+                quest.getRequirements().forEach(requirement -> requirement.remindPlayer(plr));
 
                 // Close panel
                 plr.closeInventory();
@@ -84,23 +83,27 @@ public class QuestPanel extends Panel {
 
         List<String> confirmBtnLore = new ArrayList<>();
         if(questStateEnum == QuestStateEnum.COMPLETED_ON_COOLDOWN) confirmBtnLore.add("&cDoing this quest again will cost: " + redoCost + " tickets.");
-        layout.put(1, new PanelIcon("&aConfirm", confirmBtnLore, new ItemStack(Material.WOOL, 1, (byte) 5), activateQuestScript));
+        layout.put(2, new PanelIcon("&aAccept", confirmBtnLore, new ItemStack(Material.INK_SACK, 1, (byte) 10), activateQuestScript));
 
-        // TODO: REMOVE HARDCODED LORE
         List<String> questInfoLore = new ArrayList<>();
-        questInfoLore.add("&6Reward: " + ((MoneyReward) quest.getRewards().get(0)).getMoney());
-        questInfoLore.add("&3Stage 1");
-        for(Requirement requirement : quest.getRequirements()) {
-            ItemRequirement itemRequirement = (ItemRequirement) requirement;
 
-            String item = itemRequirement.getItem().getType().name().toLowerCase().replaceAll("_", " ");
-            questInfoLore.add("&2Bring me " + itemRequirement.getAmount() + " " + item + ".");
-        }
+        // Requirements
+        quest.getRequirements().forEach(requirement -> questInfoLore.add(requirement.getRequirementLore()));
+        questInfoLore.add("");
 
-        questInfoLore.addAll(quest.getLore());
+        // Rewards
+        questInfoLore.add("&7Rewards:");
+        quest.getRewards().forEach(reward -> questInfoLore.add(reward.getRewardLore()));
+        questInfoLore.add("");
 
-        layout.put(5, new PanelIcon("&5Task", questInfoLore, new ItemStack(Material.PAPER), null));
-        layout.put(9, new PanelIcon("&cCancel", new ItemStack(Material.WOOL, 1, (byte) 14), new IconScript() {
+        // Miscellaneous Lore
+        quest.getLore().forEach(line -> questInfoLore.add("&8&o" + line));
+        questInfoLore.add("");
+        
+        questInfoLore.add("&eClick to activate this challenge.");
+
+        layout.put(5, new PanelIcon("&6Challenge", questInfoLore, new ItemBuilder(new ItemStack(Material.MAP)).addFlag(ItemFlag.values()).create(), null));
+        layout.put(8, new PanelIcon("&cCancel", new ItemStack(Material.INK_SACK, 1, (byte) 1), new IconScript() {
             @Override
             public void run(Player plr) {
                 plr.closeInventory();

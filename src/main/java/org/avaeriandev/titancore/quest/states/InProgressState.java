@@ -26,14 +26,7 @@ public class InProgressState extends State {
             if(!requirement.meetsRequirement(plr)) {
 
                 // Print requirements for player again
-                // TODO: REMOVE HARDCODED CODE
-                for(Requirement req : quest.getRequirements()) {
-                    ItemRequirement itemRequirement = (ItemRequirement) req;
-
-                    String item = itemRequirement.getItem().getType().name().toLowerCase().replaceAll("_", " ");
-                    plr.sendMessage(BaseUtils.chat("&2Bring me " + itemRequirement.getAmount() + " " + item + "."));
-                }
-
+                quest.getRequirements().forEach(req -> req.remindPlayer(plr));
                 return;
             }
         }
@@ -43,7 +36,7 @@ public class InProgressState extends State {
         quest.getRewards().forEach(reward -> reward.rewardPlayer(plr));
 
         // Notify player
-        plr.sendMessage(BaseUtils.chat("&aYou completed the quest!"));
+        plr.sendMessage(BaseUtils.chat("&aYou completed the &a&lchallenge!"));
 
         // Prepare next state expiration timestamp
         Calendar newExpireTimestamp = Calendar.getInstance();

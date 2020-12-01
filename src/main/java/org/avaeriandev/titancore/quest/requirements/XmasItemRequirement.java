@@ -1,26 +1,27 @@
 package org.avaeriandev.titancore.quest.requirements;
 
+import de.tr7zw.nbtapi.NBTItem;
 import org.avaeriandev.api.util.BaseUtils;
+import org.avaeriandev.titancore.christmas.XmasItemEnum;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class ItemRequirement extends Requirement {
+public class XmasItemRequirement extends Requirement {
+
+    private XmasItemEnum xmasItem;
 
     private ItemStack item;
     private int amount;
 
-    public ItemRequirement(ItemStack item, int amount) {
-        this.item = item;
+    public XmasItemRequirement(XmasItemEnum xmasItem, int amount) {
+        this.xmasItem = xmasItem;
         this.amount = amount;
-    }
 
-    public ItemStack getItem() {
-        return item;
-    }
-
-    public int getAmount() {
-        return amount;
+        NBTItem nbtItem = new NBTItem(new ItemStack(xmasItem.getItem()));
+        nbtItem.setString("XmasItem", xmasItem.name());
+        this.item = nbtItem.getItem();
     }
 
     @Override
@@ -57,7 +58,7 @@ public class ItemRequirement extends Requirement {
     @Override
     public void remindPlayer(Player plr) {
 
-        String message = "&2Bring me " + amount + " " + item.getType().name().toLowerCase().replaceAll("_", " ");
+        String message = "&2Bring me " + amount + " " + ChatColor.stripColor(BaseUtils.chat(item.getItemMeta().getDisplayName()));
         if(amount > 1) message += "s";
 
         plr.sendMessage(BaseUtils.chat(message));
@@ -66,7 +67,7 @@ public class ItemRequirement extends Requirement {
     @Override
     public String getRequirementLore() {
 
-        String lore = "&7Bring me " + amount + " " + item.getType().name().toLowerCase().replaceAll("_", " ");
+        String lore = "&7Bring me " + amount + " " + ChatColor.stripColor(BaseUtils.chat(item.getItemMeta().getDisplayName()));
         if(amount > 1) lore += "s";
 
         return lore;

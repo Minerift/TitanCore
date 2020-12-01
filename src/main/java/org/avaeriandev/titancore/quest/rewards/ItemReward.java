@@ -19,4 +19,9 @@ public class ItemReward extends Reward {
     public void rewardPlayer(Player plr) {
         plr.getInventory().addItem(item);
     }
+
+    @Override
+    public String getRewardLore() {
+        return "&8+ &d" + item.getType().name().toLowerCase().replaceAll("_", " ");
+    }
 }

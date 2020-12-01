@@ -19,4 +19,9 @@ public class MoneyReward extends Reward {
     public void rewardPlayer(Player plr) {
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "eco give " + plr.getName() + " " + money);
     }
+
+    @Override
+    public String getRewardLore() {
+        return "&8+ &2&l$" + money;
+    }
 }
