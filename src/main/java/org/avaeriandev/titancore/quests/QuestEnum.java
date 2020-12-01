@@ -1,7 +1,10 @@
 package org.avaeriandev.titancore.quests;
 
+import org.avaeriandev.titancore.christmas.XmasItemEnum;
 import org.avaeriandev.titancore.quest.Quest;
 import org.avaeriandev.titancore.quest.requirements.ItemRequirement;
+import org.avaeriandev.titancore.quest.requirements.XmasItemRequirement;
+import org.avaeriandev.titancore.quest.rewards.GemReward;
 import org.avaeriandev.titancore.quest.rewards.MoneyReward;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -159,6 +162,28 @@ public enum QuestEnum {
             Arrays.asList(new ItemRequirement(new ItemStack(Material.EMERALD_ORE), 30)),
             Arrays.asList(new MoneyReward(300000)),
             400
+    )),
+
+    TITAN_RADIANT_RYAN(new Quest("Radiant Ryan",
+            Arrays.asList("Ayo! I'm hauling this glowstone over", "and I need your help.", "Mind giving me a hand?"),
+            Arrays.asList(new ItemRequirement(new ItemStack(Material.GLOWSTONE), 18)),
+            Arrays.asList(new MoneyReward(400000), new GemReward(500)),
+            1000
+    )),
+
+    XMAS_SANTA(new Quest("Santa",
+            Arrays.asList("Ho ho ho!"),
+            Arrays.asList(
+                new XmasItemRequirement(XmasItemEnum.ORNAMENT, 9),
+                new XmasItemRequirement(XmasItemEnum.SNOWFLAKE, 15),
+                new XmasItemRequirement(XmasItemEnum.TREE_STAR, 12),
+                new XmasItemRequirement(XmasItemEnum.PRESENT, 4)
+            ),
+            Arrays.asList(
+                new MoneyReward(250000),
+                new GemReward(1000)
+            ),
+            500
     ));
 
     private Quest quest;
