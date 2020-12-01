@@ -1,4 +1,4 @@
-package org.avaeriandev.titancore.warden;
+package org.avaeriandev.titancore.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -27,7 +27,7 @@ public class FireworksCommand implements CommandExecutor {
         return true;
     }
 
-    public void playFireworkEffect(Player plr) {
+    public static void playFireworkEffect(Player plr) {
         FireworkEffect.Builder fwB = FireworkEffect.builder();
         Random r = new Random();
 
