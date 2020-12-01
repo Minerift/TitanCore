@@ -140,6 +140,14 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/EZBlocks.jar</systemPath>
         </dependency>
+
+        <dependency>
+            <groupId>com.connorlinfoot</groupId>
+            <artifactId>ActionBarAPI</artifactId>
+            <version>1.5.4</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/ActionBarAPI.jar</systemPath>
+        </dependency>
     </dependencies>
 
 </project>
