@@ -9,8 +9,8 @@ import java.util.Arrays;
 
 public class ItemBuilder {
 
-    private ItemStack item;
-    private ItemMeta meta;
+    protected ItemStack item;
+    protected ItemMeta meta;
 
     public ItemBuilder(ItemStack item) {
         this.item = item;
@@ -24,6 +24,11 @@ public class ItemBuilder {
 
     public ItemBuilder setLore(String ... lines) {
         meta.setLore(BaseUtils.lore(Arrays.asList(lines)));
+        return this;
+    }
+
+    public ItemBuilder setAmount(int amount) {
+        item.setAmount(amount);
         return this;
     }
 
