@@ -26,30 +26,52 @@ public class XmasItemRequirement extends Requirement {
 
     @Override
     public boolean meetsRequirement(Player plr) {
-        return plr.getInventory().containsAtLeast(item, amount);
+
+        int scanAmount = 0;
+
+        for(int i = 0; i < plr.getInventory().getSize(); i++) {
+            ItemStack selectedItem = plr.getInventory().getItem(i);
+            if(selectedItem != null && selectedItem.getType() != Material.AIR) {
+
+                NBTItem nbtItem = new NBTItem(selectedItem);
+                if(nbtItem.hasKey("XmasItem") && nbtItem.getString("XmasItem").equalsIgnoreCase(xmasItem.name())) {
+                    scanAmount += selectedItem.getAmount();
+                }
+            }
+        }
+
+        return scanAmount >= amount;
     }
 
     @Override
     public void removeRequirement(Player plr) {
+        
         int amountRemaining = amount;
-        int currentSlotIndex = 0;
+        
+        for(int i = 0; i < plr.getInventory().getSize(); i++) {
+            
+            ItemStack selectedItem = plr.getInventory().getItem(i);
+            if(selectedItem != null && selectedItem.getType() != Material.AIR) {
 
-        while(true) {
-
-            ItemStack currentSlotItem = plr.getInventory().getItem(currentSlotIndex);
-            if(currentSlotItem != null && currentSlotItem.isSimilar(item)) {
-                if(currentSlotItem.getAmount() > amountRemaining) {
-                    currentSlotItem.setAmount(currentSlotItem.getAmount() - amountRemaining);
-                    break;
-                } else if (currentSlotItem.getAmount() == amountRemaining) {
-                    plr.getInventory().setItem(currentSlotIndex, new ItemStack(Material.AIR));
-                    break;
-                } else if (currentSlotItem.getAmount() < amountRemaining) {
-                    amountRemaining -= currentSlotItem.getAmount();
-                    plr.getInventory().setItem(currentSlotIndex, new ItemStack(Material.AIR));
+                // Verify that item is a christmas event item
+                NBTItem nbtItem = new NBTItem(selectedItem);
+                if(nbtItem.hasKey("XmasItem") && nbtItem.getString("XmasItem").equalsIgnoreCase(xmasItem.name())) {
+                    
+                    // Remove amount needed
+                    if(selectedItem.getAmount() > amountRemaining) {
+                        selectedItem.setAmount(selectedItem.getAmount() - amountRemaining);
+                        break;
+                    } else if (selectedItem.getAmount() == amountRemaining) {
+                        plr.getInventory().setItem(i, new ItemStack(Material.AIR));
+                        break;
+                    } else if (selectedItem.getAmount() < amountRemaining) {
+                        amountRemaining -= selectedItem.getAmount();
+                        plr.getInventory().setItem(i, new ItemStack(Material.AIR));
+                    }
+                    
                 }
             }
-            currentSlotIndex++;
+            
         }
 
         plr.updateInventory();

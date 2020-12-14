@@ -29,10 +29,10 @@ public enum QuestEnum {
     E_LEATHER(new Quest("David Leatherman",
             Arrays.asList("Jay-walking Leno took my chestplate.", "Can you get me another?"),
             Arrays.asList(
-                    new ItemRequirement(new ItemStack(Material.LEATHER_HELMET, 1), 1),
-                    new ItemRequirement(new ItemStack(Material.LEATHER_CHESTPLATE, 1), 1),
-                    new ItemRequirement(new ItemStack(Material.LEATHER_LEGGINGS, 1), 1),
-                    new ItemRequirement(new ItemStack(Material.LEATHER_BOOTS, 1), 1)
+                    new ItemRequirement(new ItemStack(Material.LEATHER_HELMET), 1),
+                    new ItemRequirement(new ItemStack(Material.LEATHER_CHESTPLATE), 1),
+                    new ItemRequirement(new ItemStack(Material.LEATHER_LEGGINGS), 1),
+                    new ItemRequirement(new ItemStack(Material.LEATHER_BOOTS), 1)
             ),
             Arrays.asList(new MoneyReward(1500)),
             20
@@ -47,19 +47,19 @@ public enum QuestEnum {
     // TODO: D Ward
     D_CONDUCTOR(new Quest("Conductor",
             Arrays.asList("I need some help to finish my track.", "Can you get me some rails?"),
-            Arrays.asList(new ItemRequirement(new ItemStack(Material.RAILS, 1, (byte) 3), 32)),
+            Arrays.asList(new ItemRequirement(new ItemStack(Material.RAILS), 32)),
             Arrays.asList(new MoneyReward(5000)),
             100
     )),
     D_MIA_STONER(new Quest("Mia Stoner",
             Arrays.asList("Bring me a stack of dem leeaaaves yo..."),
-            Arrays.asList(new ItemRequirement(new ItemStack(Material.LEAVES, 1, (byte) 3), 64)),
+            Arrays.asList(new ItemRequirement(new ItemStack(Material.LEAVES), 64)),
             Arrays.asList(new MoneyReward(4000)),
             100
     )),
     D_STANKY_JAMES(new Quest("Stanky James",
             Arrays.asList("Pert is hungry.", "Can you get him some fish?"),
-            Arrays.asList(new ItemRequirement(new ItemStack(Material.RAW_FISH, 1, (byte) 3), 20)),
+            Arrays.asList(new ItemRequirement(new ItemStack(Material.RAW_FISH), 20)),
             Arrays.asList(new MoneyReward(7500)),
             100
     )),
