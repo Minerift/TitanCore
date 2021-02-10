@@ -23,9 +23,11 @@ commands:
     description: Give a custom tool to a player
   enchanter:
     description: Access the enchanter panel
-  xmas:
-    description: Debug command for Xmas Event
   speed:
     description: Toggles the speed effect for Titan players
   haste:
     description: Toggles the haste effect for Titan players
+  dynamite:
+    description: Debug command for dynamite
+  magnet:
+    description: Command to toggle magnet ability
