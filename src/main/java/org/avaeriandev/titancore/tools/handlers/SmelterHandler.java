@@ -1,12 +1,17 @@
 package org.avaeriandev.titancore.tools.handlers;
 
 import me.clip.ezblocks.EZBlocks;
+import org.avaeriandev.titancore.MagnetHandler;
+import org.avaeriandev.titancore.TitanPlayer;
+import org.avaeriandev.titancore.TitanPlayerAPI;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SmelterHandler extends AbstractHandler {
@@ -24,16 +29,38 @@ public class SmelterHandler extends AbstractHandler {
     @Override
     public boolean breakBlock(Player plr, ItemStack tool, Block block) {
 
+        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
+        MagnetHandler magnetHandler = new MagnetHandler(titanPlayer) {
+            @Override
+            protected void useDefaultHandler(Block block, List<ItemStack> customDrops, boolean countForGems) {
+                block.setType(Material.AIR);
+
+                for(ItemStack drop : customDrops) {
+                    block.getLocation().getWorld().dropItemNaturally(block.getLocation(), drop);
+                }
+
+                if(countForGems) {
+                    EZBlocks.getEZBlocks().getBreakHandler().handleBlockBreakEvent(plr, block);
+                }
+            }
+        };
+
         if(smelterMap.containsKey(block.getType())) {
 
+            // Get smelted block drop
             Material material = block.getType();
-            block.setType(Material.AIR);
-            block.getLocation().getWorld().dropItemNaturally(block.getLocation(), new ItemStack(smelterMap.get(material)));
-            EZBlocks.getEZBlocks().getBreakHandler().handleBlockBreakEvent(plr, block);
+            ItemStack smeltedItem = new ItemStack(smelterMap.get(material));
 
-            return true; // cancel event
+            // Handle magnet
+            magnetHandler.handleMagnet(block, Arrays.asList(smeltedItem), false);
+
+        } else {
+
+            // Handle magnet
+            magnetHandler.handleMagnet(block, tool, false);
+
         }
 
-        return false;
+        return true; // cancel event
     }
 }

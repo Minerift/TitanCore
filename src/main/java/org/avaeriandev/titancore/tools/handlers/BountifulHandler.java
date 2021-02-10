@@ -4,6 +4,10 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.managers.RegionManager;
+import me.clip.ezblocks.EZBlocks;
+import org.avaeriandev.titancore.MagnetHandler;
+import org.avaeriandev.titancore.TitanPlayer;
+import org.avaeriandev.titancore.TitanPlayerAPI;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -11,10 +15,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BountifulHandler extends AbstractHandler {
 
@@ -48,8 +49,24 @@ public class BountifulHandler extends AbstractHandler {
 
         List<Block> surroundingBlocks = new ArrayList<>();
         Location initialLocation = block.getLocation().clone().subtract(1, 1, 1);
-
         RegionManager rm = WorldGuardPlugin.inst().getRegionManager(block.getWorld());
+
+        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
+        MagnetHandler magnetHandler = new MagnetHandler(titanPlayer) {
+            @Override
+            protected void useDefaultHandler(Block block, List<ItemStack> customDrops, boolean countForGems) {
+                block.setType(Material.AIR);
+
+                World world = block.getWorld();
+                for(ItemStack drop : customDrops) {
+                    world.dropItemNaturally(block.getLocation(), drop);
+                }
+
+                if(countForGems) {
+                    EZBlocks.getEZBlocks().getBreakHandler().handleBlockBreakEvent(plr, block);
+                }
+            }
+        };
 
         for(int x = 0; x < radius; x++) {
             for(int y = 0; y < radius; y++) {
@@ -64,6 +81,7 @@ public class BountifulHandler extends AbstractHandler {
             }
         }
 
+        // Get best block
         Block bestBlock = null;
         for(Block selectedBlock : surroundingBlocks) {
             if(materialPriorities.containsKey(selectedBlock.getType())) {
@@ -75,13 +93,9 @@ public class BountifulHandler extends AbstractHandler {
         }
 
         // Drop best material found
-        if(bestBlock != null) {
-            World world = block.getLocation().getWorld();
-            for(ItemStack drop : bestBlock.getDrops(tool)) {
-                world.dropItemNaturally(block.getLocation(), drop);
-            }
-        }
+        Collection<ItemStack> drops = bestBlock != null ? bestBlock.getDrops(tool) : block.getDrops(tool);
+        magnetHandler.handleMagnet(block, new ArrayList<>(drops), true);
 
-        return false;
+        return true;
     }
 }
