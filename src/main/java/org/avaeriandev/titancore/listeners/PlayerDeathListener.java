@@ -1,5 +1,8 @@
 package org.avaeriandev.titancore.listeners;
 
+import de.tr7zw.nbtapi.NBTItem;
+import org.avaeriandev.api.util.ItemBuilder;
+import org.avaeriandev.api.util.SkullBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,9 +23,14 @@ public class PlayerDeathListener implements Listener {
             Player attacker = (Player) e.getEntity().getKiller();
 
             Random random = new Random();
-            if(random.nextInt(10) > 7) {
-                ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
-                attacker.getInventory().addItem(skull);
+            if(random.nextInt(10) >= 7) {
+                // Build item
+                ItemStack skull = new SkullBuilder().setOwner(victim.getName()).create();
+                NBTItem nbtItem = new NBTItem(skull);
+                nbtItem.setBoolean("quest-skull", true);
+
+                // Add item to attacker's inventory
+                attacker.getInventory().addItem(nbtItem.getItem());
             }
         }
     }
