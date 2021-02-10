@@ -21,6 +21,11 @@ public class PanelIcon {
         this.script = script;
     }
 
+    public PanelIcon(ItemStack icon, IconScript script) {
+        this.icon = icon;
+        this.script = script;
+    }
+
     public ItemStack getIcon() {
         return icon;
     }
