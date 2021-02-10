@@ -8,6 +8,10 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import de.tr7zw.nbtapi.NBTItem;
 import net.lightshard.prisoncells.PrisonCells;
 import net.lightshard.prisoncells.cell.PrisonCell;
+import org.avaeriandev.api.util.WorldGuardUtils;
+import org.avaeriandev.titancore.MagnetHandler;
+import org.avaeriandev.titancore.TitanPlayer;
+import org.avaeriandev.titancore.TitanPlayerAPI;
 import org.avaeriandev.titancore.tools.CustomToolEnum;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,17 +23,26 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class BlockBreakListener implements Listener {
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void onBlockBreak(BlockBreakEvent e) {
 
         Player plr = e.getPlayer();
+        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
         Block block = e.getBlock();
 
         RegionManager rm = WorldGuardPlugin.inst().getRegionManager(block.getWorld());
         ApplicableRegionSet set = rm.getApplicableRegions(block.getLocation());
+
+        MagnetHandler magnetHandler = new MagnetHandler(titanPlayer) {
+            @Override
+            protected void useDefaultHandler(Block block, List<ItemStack> customDrops, boolean countForGems) {
+                // Do nothing; let Minecraft handle
+            }
+        };
 
         String[] woodRGList = {
                 "ewood",
@@ -40,7 +53,7 @@ public class BlockBreakListener implements Listener {
                 "awood"
         };
 
-        // Determine if custom tool was used
+        // Handle custom tool
         if(plr.getItemInHand() != null && plr.getItemInHand().getType() != Material.AIR) {
             ItemStack toolUsed = plr.getItemInHand();
             NBTItem nbtItem = new NBTItem(toolUsed);
@@ -51,16 +64,17 @@ public class BlockBreakListener implements Listener {
                 customToolEnum = CustomToolEnum.valueOf(nbtItem.getString("ToolType").toUpperCase());
                 if(set.allows(DefaultFlag.BLOCK_BREAK)) {
 
-                    PrisonCell cell = PrisonCells.getInstance().getCellManager().getByLocation(block.getLocation());
-                    if(cell != null) return;
+                    if(WorldGuardUtils.isInCell(block.getLocation())) { return; }
 
                     boolean cancelEvent = customToolEnum.getHandler().breakBlock(plr, toolUsed, block);
                     e.setCancelled(cancelEvent);
+                    return;
                 }
 
             } catch(IllegalArgumentException ex) {}
         }
 
+        // Handle wood mine blocks
         if(set.allows(DefaultFlag.BLOCK_BREAK)) {
 
             // Handle wood regions
@@ -80,7 +94,9 @@ public class BlockBreakListener implements Listener {
                         case LOG:
                         case LOG_2:
                             block.setType(Material.AIR);
-                            block.getLocation().getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.LOG, 1));
+
+                            ItemStack logItem = new ItemStack(Material.LOG, 1);
+                            magnetHandler.handleMagnet(block, Arrays.asList(logItem), false); // Minecraft already handles gems
 
                             // Cancel wood break event
                             e.setCancelled(true);
@@ -92,7 +108,8 @@ public class BlockBreakListener implements Listener {
 
                             if(e.getPlayer().getItemInHand().getType() == Material.SHEARS) {
                                 // Drop item
-                                block.getLocation().getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.LEAVES, 1));
+                                ItemStack leavesItem = new ItemStack(Material.LEAVES, 1);
+                                magnetHandler.handleMagnet(block, Arrays.asList(leavesItem), false); // Minecraft already handles gems
                             }
 
                             // Cancel wood break event
@@ -117,6 +134,11 @@ public class BlockBreakListener implements Listener {
                     block.setType(Material.AIR);
                     return;
             }
+        }
+
+        // Handle regular blocks
+        if(set.allows(DefaultFlag.BLOCK_BREAK) && !WorldGuardUtils.isInCell(block.getLocation())) {
+            magnetHandler.handleMagnet(block, plr.getItemInHand(), false); // Already counted, no need to custom handle
         }
     }
 }
