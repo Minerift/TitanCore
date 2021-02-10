@@ -8,6 +8,7 @@ import org.avaeriandev.titancore.commands.*;
 import org.avaeriandev.titancore.commissary.CommissaryCommand;
 import org.avaeriandev.titancore.commissary.CommissarySignListener;
 import org.avaeriandev.titancore.enchanter.EnchanterCommand;
+import org.avaeriandev.titancore.explosives.ExplosiveListener;
 import org.avaeriandev.titancore.listeners.*;
 import org.avaeriandev.titancore.quests.QuestCommand;
 import org.avaeriandev.titancore.tools.ToolCommand;
@@ -57,8 +58,7 @@ public class TitanPlugin extends JavaPlugin {
         registerListener(new BlockBreakListener());
         registerListener(new PVPListener());
         registerListener(new PlayerDeathListener());
-        registerListener(new OpenPresentListener());
-
+        registerListener(new ExplosiveListener());
         registerListener(new CommissarySignListener());
 
         // Register commands
@@ -69,10 +69,11 @@ public class TitanPlugin extends JavaPlugin {
         registerCommand("quest", new QuestCommand());
         registerCommand("fw", new FireworksCommand());
         registerCommand("rifttool", new ToolCommand());
-        registerCommand("xmas", new XmasItemCommand());
+        registerCommand("dynamite", new DynamiteCommand());
 
         registerCommand("speed", new SpeedCommand());
         registerCommand("haste", new HasteCommand());
+        registerCommand("magnet", new MagnetCommand());
 
         // Register placeholders
         new Placeholders().register();

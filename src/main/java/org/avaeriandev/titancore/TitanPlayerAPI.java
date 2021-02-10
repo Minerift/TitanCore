@@ -1,7 +1,6 @@
 package org.avaeriandev.titancore;
 
-import org.avaeriandev.api.util.BaseUtils;
-import org.avaeriandev.titancore.quest.QuestData;
+import org.avaeriandev.titancore.quests.util.QuestData;
 import org.avaeriandev.titancore.quests.QuestEnum;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -10,7 +9,6 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class TitanPlayerAPI {
