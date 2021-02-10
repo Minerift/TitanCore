@@ -1,11 +1,10 @@
 package org.avaeriandev.titancore.quests;
 
-import org.avaeriandev.titancore.christmas.XmasItemEnum;
-import org.avaeriandev.titancore.quest.Quest;
-import org.avaeriandev.titancore.quest.requirements.ItemRequirement;
-import org.avaeriandev.titancore.quest.requirements.XmasItemRequirement;
-import org.avaeriandev.titancore.quest.rewards.GemReward;
-import org.avaeriandev.titancore.quest.rewards.MoneyReward;
+import org.avaeriandev.titancore.quests.util.Quest;
+import org.avaeriandev.titancore.quests.util.requirements.ItemRequirement;
+import org.avaeriandev.titancore.quests.util.requirements.SkullRequirement;
+import org.avaeriandev.titancore.quests.util.rewards.GemReward;
+import org.avaeriandev.titancore.quests.util.rewards.MoneyReward;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -39,7 +38,7 @@ public enum QuestEnum {
     )),
     E_VOODOO(new Quest("Voodoo",
             Arrays.asList("The guards took my last one,", "can you get me another head?"),
-            Arrays.asList(new ItemRequirement(new ItemStack(Material.SKULL_ITEM, 1, (byte) 3),1)),
+            Arrays.asList(new SkullRequirement(1)),
             Arrays.asList(new MoneyReward(2500)),
             20
     )),
@@ -97,7 +96,7 @@ public enum QuestEnum {
     )),
     C_KURT_THROAT(new Quest("Kurt Throat",
             Arrays.asList(new String[]{}),
-            Arrays.asList(new ItemRequirement(new ItemStack(Material.SKULL_ITEM, 1, (byte) 3), 5)),
+            Arrays.asList(new SkullRequirement(5)),
             Arrays.asList(new MoneyReward(20000)),
             200
     )),
@@ -169,21 +168,6 @@ public enum QuestEnum {
             Arrays.asList(new ItemRequirement(new ItemStack(Material.GLOWSTONE), 18)),
             Arrays.asList(new MoneyReward(400000), new GemReward(500)),
             1000
-    )),
-
-    XMAS_SANTA(new Quest("Santa",
-            Arrays.asList("Ho ho ho!"),
-            Arrays.asList(
-                new XmasItemRequirement(XmasItemEnum.ORNAMENT, 9),
-                new XmasItemRequirement(XmasItemEnum.SNOWFLAKE, 15),
-                new XmasItemRequirement(XmasItemEnum.TREE_STAR, 12),
-                new XmasItemRequirement(XmasItemEnum.PRESENT, 4)
-            ),
-            Arrays.asList(
-                new MoneyReward(250000),
-                new GemReward(1000)
-            ),
-            500
     ));
 
     private Quest quest;

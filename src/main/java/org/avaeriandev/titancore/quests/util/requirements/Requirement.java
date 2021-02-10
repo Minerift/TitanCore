@@ -1,4 +1,4 @@
-package org.avaeriandev.titancore.quest.requirements;
+package org.avaeriandev.titancore.quests.util.requirements;
 
 import org.bukkit.entity.Player;
 

@@ -1,7 +1,7 @@
-package org.avaeriandev.titancore.quest;
+package org.avaeriandev.titancore.quests.util;
 
-import org.avaeriandev.titancore.quest.requirements.Requirement;
-import org.avaeriandev.titancore.quest.rewards.Reward;
+import org.avaeriandev.titancore.quests.util.requirements.Requirement;
+import org.avaeriandev.titancore.quests.util.rewards.Reward;
 
 import java.util.List;
 

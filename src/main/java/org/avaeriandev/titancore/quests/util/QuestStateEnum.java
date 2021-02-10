@@ -1,9 +1,9 @@
-package org.avaeriandev.titancore.quest;
+package org.avaeriandev.titancore.quests.util;
 
-import org.avaeriandev.titancore.quest.states.CompletedState;
-import org.avaeriandev.titancore.quest.states.InProgressState;
-import org.avaeriandev.titancore.quest.states.InactiveState;
-import org.avaeriandev.titancore.quest.states.State;
+import org.avaeriandev.titancore.quests.util.states.CompletedState;
+import org.avaeriandev.titancore.quests.util.states.InProgressState;
+import org.avaeriandev.titancore.quests.util.states.InactiveState;
+import org.avaeriandev.titancore.quests.util.states.State;
 
 public enum QuestStateEnum {
 

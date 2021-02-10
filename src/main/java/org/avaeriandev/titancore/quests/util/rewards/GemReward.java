@@ -1,4 +1,4 @@
-package org.avaeriandev.titancore.quest.rewards;
+package org.avaeriandev.titancore.quests.util.rewards;
 
 import org.avaeriandev.titancore.TitanPlayer;
 import org.avaeriandev.titancore.TitanPlayerAPI;

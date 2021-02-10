@@ -1,7 +1,7 @@
-package org.avaeriandev.titancore.quest.states;
+package org.avaeriandev.titancore.quests.util.states;
 
 import org.avaeriandev.titancore.TitanPlayer;
-import org.avaeriandev.titancore.quest.QuestData;
+import org.avaeriandev.titancore.quests.util.QuestData;
 
 public abstract class State {
 

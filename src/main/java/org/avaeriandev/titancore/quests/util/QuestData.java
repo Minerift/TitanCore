@@ -1,4 +1,4 @@
-package org.avaeriandev.titancore.quest;
+package org.avaeriandev.titancore.quests.util;
 
 import org.avaeriandev.titancore.quests.QuestEnum;
 import org.jetbrains.annotations.NotNull;

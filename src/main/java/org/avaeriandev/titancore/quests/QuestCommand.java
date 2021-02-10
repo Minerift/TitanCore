@@ -3,7 +3,7 @@ package org.avaeriandev.titancore.quests;
 import org.avaeriandev.api.util.BaseUtils;
 import org.avaeriandev.titancore.TitanPlayer;
 import org.avaeriandev.titancore.TitanPlayerAPI;
-import org.avaeriandev.titancore.quest.QuestData;
+import org.avaeriandev.titancore.quests.util.QuestData;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

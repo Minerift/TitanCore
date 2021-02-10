@@ -1,12 +1,11 @@
-package org.avaeriandev.titancore.quest.states;
+package org.avaeriandev.titancore.quests.util.states;
 
 import org.avaeriandev.api.util.BaseUtils;
 import org.avaeriandev.titancore.TitanPlayer;
-import org.avaeriandev.titancore.quest.Quest;
-import org.avaeriandev.titancore.quest.QuestData;
-import org.avaeriandev.titancore.quest.QuestStateEnum;
-import org.avaeriandev.titancore.quest.requirements.ItemRequirement;
-import org.avaeriandev.titancore.quest.requirements.Requirement;
+import org.avaeriandev.titancore.quests.util.Quest;
+import org.avaeriandev.titancore.quests.util.QuestData;
+import org.avaeriandev.titancore.quests.util.QuestStateEnum;
+import org.avaeriandev.titancore.quests.util.requirements.Requirement;
 import org.bukkit.entity.Player;
 
 import java.util.Calendar;
