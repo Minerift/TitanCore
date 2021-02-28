@@ -3,6 +3,7 @@ package org.avaeriandev.titancore;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import org.apache.commons.lang.Validate;
@@ -20,8 +21,12 @@ import java.util.Map;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class TitanPlayer {
 
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper().configure(SerializationFeature.INDENT_OUTPUT, true);
     private static BiMap<OfflinePlayer, TitanPlayer> plrDictionary = HashBiMap.create();
+
+    public static TitanPlayer get(OfflinePlayer plr) {
+        return plrDictionary.get(plr);
+    }
 
     public static TitanPlayer load(OfflinePlayer plr) {
 
@@ -63,7 +68,7 @@ public class TitanPlayer {
         File saveFile = null;
         try {
 
-            saveFile = new File(TitanPlugin.plrDataDir, plr.getUniqueId().toString() + ".yml");
+            saveFile = new File(TitanPlugin.plrDataDir, plr.getUniqueId().toString() + ".json");
             if(!saveFile.exists()) saveFile.createNewFile();
 
         } catch (IOException e) {
@@ -74,15 +79,15 @@ public class TitanPlayer {
         return saveFile;
     }
 
-    public static TitanPlayer deserialize(OfflinePlayer plr, File file) {
+    private static TitanPlayer deserialize(OfflinePlayer plr, File file) {
         Validate.notNull(plr, "Player cannot be null!");
         Validate.notNull(file, "File cannot be null!");
 
         TitanPlayer titanPlayer = null;
         try {
 
-            titanPlayer = mapper.readValue(file, TitanPlayer.class);
-            titanPlayer.postConstruction(plr); // TODO assess approach
+            titanPlayer = file.length() != 0 ? mapper.readValue(file, TitanPlayer.class) : new TitanPlayer();
+            titanPlayer.postConstruction(plr);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -108,11 +113,13 @@ public class TitanPlayer {
     private void postConstruction(OfflinePlayer plr) {
         this.plr = plr;
     }
-    
+
+    @JsonIgnore
     public OfflinePlayer getPlayer() {
         return plr;
     }
 
+    @JsonIgnore
     public boolean isMagnetActive() {
         return isMagnetActive;
     }
@@ -155,9 +162,5 @@ public class TitanPlayer {
             slotPurchases = new int[GemShopManager.slotCount];
             Arrays.fill(slotPurchases, 0);
         }
-    }
-
-    private Object attemptToGet(Map<String, Object> serialMap, String key, Object fallback) {
-        return serialMap.containsKey(key) ? serialMap.get(key) : fallback;
     }
 }
