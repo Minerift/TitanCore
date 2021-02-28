@@ -1,5 +1,6 @@
 package org.avaeriandev.titancore.listeners;
 
+import org.avaeriandev.titancore.TitanPlayer;
 import org.avaeriandev.titancore.TitanPlayerAPI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,7 +16,7 @@ public class PlayerJoinListener implements Listener {
 
         // Load player data
         Player plr = e.getPlayer();
-        TitanPlayerAPI.load(plr);
+        TitanPlayer.load(plr);
 
         // Give player first-join bread (if eligible)
         if(!plr.hasPlayedBefore()) {

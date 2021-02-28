@@ -2,7 +2,7 @@ package org.avaeriandev.titancore.commands;
 
 import de.tr7zw.nbtapi.NBTItem;
 import org.avaeriandev.api.util.ItemBuilder;
-import org.avaeriandev.titancore.explosives.ExplosiveType;
+import org.avaeriandev.titancore.modules.explosives.ExplosiveType;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

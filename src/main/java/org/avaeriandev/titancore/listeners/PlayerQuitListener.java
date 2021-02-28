@@ -1,11 +1,9 @@
 package org.avaeriandev.titancore.listeners;
 
-import org.avaeriandev.titancore.TitanPlayer;
 import org.avaeriandev.titancore.TitanPlayerAPI;
-import org.avaeriandev.titancore.auction.AuctionListing;
-import org.avaeriandev.titancore.auction.AuctionSystem;
+import org.avaeriandev.titancore.modules.auction.AuctionListing;
+import org.avaeriandev.titancore.modules.auction.AuctionSystem;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
