@@ -51,7 +51,7 @@ public class BountifulHandler extends AbstractHandler {
         Location initialLocation = block.getLocation().clone().subtract(1, 1, 1);
         RegionManager rm = WorldGuardPlugin.inst().getRegionManager(block.getWorld());
 
-        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
+        TitanPlayer titanPlayer = TitanPlayer.get(plr);
         MagnetHandler magnetHandler = new MagnetHandler(titanPlayer) {
             @Override
             protected void useDefaultHandler(Block block, List<ItemStack> customDrops, boolean countForGems) {

@@ -19,7 +19,7 @@ public class PurchaseScript implements IconScript {
     @Override
     public void run(Player plr) {
 
-        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
+        TitanPlayer titanPlayer = TitanPlayer.get(plr);
         if(titanPlayer.getTickets() >= tier.getTicketPrice()) {
 
             // Purchase pass with tickets

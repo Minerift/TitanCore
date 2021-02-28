@@ -24,7 +24,7 @@ public class GemShopPanel extends Panel {
     private void prepareLayout(Player plr) {
 
         // Retrieve data
-        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
+        TitanPlayer titanPlayer = TitanPlayer.get(plr);
 
         int[] slotPurchases = titanPlayer.getSlotPurchases();
 

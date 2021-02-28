@@ -17,7 +17,7 @@ public class GemPurchaseScript implements IconScript {
     @Override
     public void run(Player plr) {
 
-        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
+        TitanPlayer titanPlayer = TitanPlayer.get(plr);
 
         // Check whether player can afford slot item
         if(titanPlayer.getTickets() >= GemShopManager.dailyItems[slot].getCost()) {

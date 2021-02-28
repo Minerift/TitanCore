@@ -29,7 +29,7 @@ public class SmelterHandler extends AbstractHandler {
     @Override
     public boolean breakBlock(Player plr, ItemStack tool, Block block) {
 
-        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
+        TitanPlayer titanPlayer = TitanPlayer.get(plr);
         MagnetHandler magnetHandler = new MagnetHandler(titanPlayer) {
             @Override
             protected void useDefaultHandler(Block block, List<ItemStack> customDrops, boolean countForGems) {

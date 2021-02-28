@@ -14,7 +14,7 @@ public class GemReward extends Reward {
 
     @Override
     public void rewardPlayer(Player plr) {
-        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
+        TitanPlayer titanPlayer = TitanPlayer.get(plr);
 
         titanPlayer.setTickets(titanPlayer.getTickets() + gems);
     }

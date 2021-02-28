@@ -26,7 +26,7 @@ public class Placeholders extends PlaceholderExpansion {
     @Override
     public String onRequest(OfflinePlayer plr, @NotNull String identifier) {
 
-        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
+        TitanPlayer titanPlayer = TitanPlayer.get(plr);
         if(titanPlayer == null) return "null";
 
         switch(identifier) {

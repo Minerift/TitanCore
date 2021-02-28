@@ -26,7 +26,7 @@ public class MagnetCommand implements CommandExecutor {
         messages.put(false, "&cMagnet deactivated!"); // set to false
 
         Player plr = (Player) sender;
-        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
+        TitanPlayer titanPlayer = TitanPlayer.get(plr);
 
         if(!titanPlayer.hasMagnetAbility()) {
             plr.sendMessage(BaseUtils.chat("&cPurchase access to this ability at &nstore.minerift.org!"));

@@ -28,7 +28,7 @@ public class QuestCommand implements CommandExecutor {
         }
 
         Player plr = Bukkit.getPlayer(args[1]);
-        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
+        TitanPlayer titanPlayer = TitanPlayer.get(plr);
 
         QuestEnum questEnum = QuestEnum.valueOf(args[0].toUpperCase());
         QuestData questData = titanPlayer.getDataForQuest(questEnum);

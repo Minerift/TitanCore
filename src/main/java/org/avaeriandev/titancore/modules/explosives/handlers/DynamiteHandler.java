@@ -30,7 +30,7 @@ public class DynamiteHandler extends ExplosiveHandler {
         RegionManager rm = WorldGuardPlugin.inst().getRegionManager(world);
         List<Block> blocks = e.blockList();
 
-        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
+        TitanPlayer titanPlayer = TitanPlayer.get(plr);
         MagnetHandler magnetHandler = new MagnetHandler(titanPlayer) {
             @Override
             protected void useDefaultHandler(Block block, List<ItemStack> customDrops, boolean countForGems) {

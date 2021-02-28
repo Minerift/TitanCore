@@ -48,7 +48,7 @@ public class EnchantScript implements IconScript, Listener {
     public void onEnchant(EnchantItemEvent e) {
         if(e.getView().equals(inventoryView)) {
             Player plr = e.getEnchanter();
-            TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
+            TitanPlayer titanPlayer = TitanPlayer.get(plr);
 
             if(titanPlayer.getTickets() >= level.getLevel(e.whichButton())) {
                 titanPlayer.setTickets(titanPlayer.getTickets() - level.getLevel(e.whichButton()));

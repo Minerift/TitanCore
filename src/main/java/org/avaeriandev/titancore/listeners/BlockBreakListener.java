@@ -29,7 +29,7 @@ public class BlockBreakListener implements Listener {
     public void onBlockBreak(BlockBreakEvent e) {
 
         Player plr = e.getPlayer();
-        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
+        TitanPlayer titanPlayer = TitanPlayer.get(plr);
         Block block = e.getBlock();
 
         RegionManager rm = WorldGuardPlugin.inst().getRegionManager(block.getWorld());

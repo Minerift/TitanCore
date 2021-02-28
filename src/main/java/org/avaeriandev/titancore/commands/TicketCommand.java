@@ -42,7 +42,7 @@ public class TicketCommand implements CommandExecutor {
             return false;
         }
 
-        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
+        TitanPlayer titanPlayer = TitanPlayer.get(plr);
 
         // Process arguments
         switch(args[0]) {

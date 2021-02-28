@@ -19,7 +19,7 @@ public class LumberjackHandler extends AbstractHandler {
     public boolean breakBlock(Player plr, ItemStack tool, Block block) {
 
         Location location = block.getLocation().clone();
-        TitanPlayer titanPlayer = TitanPlayerAPI.get(plr);
+        TitanPlayer titanPlayer = TitanPlayer.get(plr);
 
         MagnetHandler magnetHandler = new MagnetHandler(titanPlayer) {
             @Override
