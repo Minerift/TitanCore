@@ -46,7 +46,7 @@ public class TitanPlayerAPI {
         }
 
         // Attempt to load to TitanPlayer object
-        TitanPlayer titanPlayer = TitanPlayer.deserialize(plr, null); // TODO null for compatibility
+        TitanPlayer titanPlayer = null; // TODO null for compatibility
         if(titanPlayer == null) {
             System.err.println(plr.getName() + " failed to load!");
             return null;
