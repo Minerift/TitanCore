@@ -29,7 +29,7 @@ import java.util.Random;
 
 public class AuctionCellListener implements Listener {
 
-    private final int MAX_LOCATION_ATTEMPTS = 10;
+    private static final int MAX_LOCATION_ATTEMPTS = 10;
 
     private AuctionModule auctionModule;
     public AuctionCellListener() {
