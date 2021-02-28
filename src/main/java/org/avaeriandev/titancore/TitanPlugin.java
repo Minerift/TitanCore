@@ -1,9 +1,8 @@
 package org.avaeriandev.titancore;
 
 import org.avaeriandev.titancore.api.external.Placeholders;
-import org.avaeriandev.titancore.modules.auction.AuctionListing;
-import org.avaeriandev.titancore.modules.auction.AuctionSystem;
-import org.avaeriandev.titancore.modules.auction.AuctionSignListener;
+import org.avaeriandev.titancore.modules.Module;
+import org.avaeriandev.titancore.modules.auction.AuctionModule;
 import org.avaeriandev.titancore.commands.*;
 import org.avaeriandev.titancore.modules.commissary.CommissaryCommand;
 import org.avaeriandev.titancore.modules.commissary.CommissarySignListener;
@@ -15,14 +14,14 @@ import org.avaeriandev.titancore.modules.tools.ToolCommand;
 import org.avaeriandev.titancore.modules.warden.WardenCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class TitanPlugin extends JavaPlugin {
@@ -32,8 +31,11 @@ public class TitanPlugin extends JavaPlugin {
 
     public static File plrDataDir;
 
+    private static Map<Class<? extends Module>, Module> modules;
+
     public void onEnable() {
         instance = this;
+        modules = new HashMap<>();
         plrDataDir = new File(instance.getDataFolder(), "playerData");
         if(!plrDataDir.exists()) plrDataDir.mkdir();
 
@@ -46,11 +48,8 @@ public class TitanPlugin extends JavaPlugin {
             }
         }.runTaskTimer(this, 0, 20 * TimeUnit.SECONDS.toSeconds(30));
 
-        // Register auction listeners
-        registerListener(new AuctionSystem());
-        registerListener(new AuctionSignListener());
-
-        AuctionSystem.load();
+        // Register modules
+        registerModule(new AuctionModule());
 
         // Register other listeners
         registerListener(new PlayerJoinListener());
@@ -85,20 +84,10 @@ public class TitanPlugin extends JavaPlugin {
         questStateCheckTimer.cancel();
 
         // Save player data
-        for(Player plr : Bukkit.getOnlinePlayers()) {
-            TitanPlayerAPI.save(plr);
-            TitanPlayerAPI.unload(plr);
-        }
+        Bukkit.getOnlinePlayers().forEach(plr -> TitanPlayer.unload(plr));
 
-        // Delete auction chests
-        for(AuctionListing listing : new ArrayList<>(AuctionSystem.listings)) {
-            if (listing.isOnDeletionTimer()) {
-                listing.getDeletionTimer().cancel();
-                listing.delete();
-            }
-        }
-
-        AuctionSystem.save();
+        modules.values().forEach(module -> module.terminate());
+        modules.clear();
     }
 
     private void registerListener(Listener listener) {
@@ -106,6 +95,17 @@ public class TitanPlugin extends JavaPlugin {
     }
     private void registerCommand(String prefix, CommandExecutor executor) {
         instance.getCommand(prefix).setExecutor(executor);
+    }
+
+    private void registerModule(Module module) {
+        if(!modules.containsKey(module.getClass())) {
+            modules.put(module.getClass(), module);
+            module.start();
+        }
+    }
+
+    public static <E extends Module> E getModule(Class<? extends Module> clazz) {
+        return (E) modules.get(clazz);
     }
 
     public static TitanPlugin getInstance() {
