@@ -1,7 +1,7 @@
 package org.avaeriandev.titancore;
 
-import org.avaeriandev.titancore.quests.util.QuestData;
-import org.avaeriandev.titancore.quests.QuestEnum;
+import org.avaeriandev.titancore.modules.quests.util.QuestData;
+import org.avaeriandev.titancore.modules.quests.QuestEnum;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.yaml.snakeyaml.Yaml;
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+@Deprecated
 public class TitanPlayerAPI {
 
     private static Map<OfflinePlayer, TitanPlayer> titanPlayerDictionary = new HashMap<>();
@@ -45,7 +46,7 @@ public class TitanPlayerAPI {
         }
 
         // Attempt to load to TitanPlayer object
-        TitanPlayer titanPlayer = TitanPlayer.deserialize(plr, serialMap);
+        TitanPlayer titanPlayer = TitanPlayer.deserialize(plr, null); // TODO null for compatibility
         if(titanPlayer == null) {
             System.err.println(plr.getName() + " failed to load!");
             return null;
@@ -69,7 +70,8 @@ public class TitanPlayerAPI {
             return;
         }
 
-        Map<String, Object> serialMap = titanPlayer.serialize();
+        //Map<String, Object> serialMap = titanPlayer.serialize();
+        Map<String, Object> serialMap = new HashMap<>(); // TODO compatibility
 
         try {
             yaml.dump(serialMap, new FileWriter(saveFile));
