@@ -1,9 +1,13 @@
-package org.avaeriandev.titancore.modules.auction;
+package org.avaeriandev.titancore.modules.auction.listeners;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import net.milkbowl.vault.economy.Economy;
 import org.avaeriandev.api.util.BaseUtils;
+import org.avaeriandev.titancore.TitanPlugin;
+import org.avaeriandev.titancore.modules.auction.AuctionModule;
+import org.avaeriandev.titancore.modules.auction.util.AuctionListing;
+import org.avaeriandev.titancore.modules.auction.util.AuctionWard;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
@@ -20,6 +24,11 @@ public class AuctionSignListener implements Listener {
 
     private static Economy econ = Bukkit.getServer().getServicesManager().getRegistration(Economy.class).getProvider();
 
+    private AuctionModule auctionModule;
+    public AuctionSignListener() {
+        this.auctionModule = TitanPlugin.getModule(AuctionModule.class);
+    }
+
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onSignClick(PlayerInteractEvent e) {
 
@@ -28,8 +37,8 @@ public class AuctionSignListener implements Listener {
         if(e.getAction() == Action.RIGHT_CLICK_BLOCK
                 && e.getClickedBlock().getType() == Material.WALL_SIGN) {
 
-            for(AuctionListing listing : AuctionSystem.listings) {
-                if(listing.getSign().equals(e.getClickedBlock())) {
+            for(AuctionListing listing : auctionModule.getListings()) {
+                if(listing.getSignBlock().equals(e.getClickedBlock())) {
 
                     if(listing.getOwner() == null) {
                         if(econ.getBalance(plr) >= listing.getPrice()) {
@@ -39,7 +48,7 @@ public class AuctionSignListener implements Listener {
                             listing.purchase(plr);
 
                             // Update sign
-                            Sign sign = (Sign) listing.getSign().getState();
+                            Sign sign = (Sign) listing.getSignBlock().getState();
                             sign.setLine(0, BaseUtils.chat("&4[BuyChest]"));
                             sign.setLine(1, "");
                             sign.setLine(2, "Owned by:");
@@ -56,7 +65,7 @@ public class AuctionSignListener implements Listener {
                         }
                     } else if(listing.getOwner().equals(plr.getUniqueId())) {
 
-                        Chest chest = (Chest) listing.getChest().getState();
+                        Chest chest = (Chest) listing.getChestBlock().getState();
 
                         // Allow owner to open chest
                         RegionManager rm = WorldGuardPlugin.inst().getRegionManager(e.getPlayer().getWorld());

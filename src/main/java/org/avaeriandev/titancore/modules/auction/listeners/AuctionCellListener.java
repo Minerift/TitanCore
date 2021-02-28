@@ -1,4 +1,4 @@
-package org.avaeriandev.titancore.modules.auction;
+package org.avaeriandev.titancore.modules.auction.listeners;
 
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -8,6 +8,10 @@ import net.lightshard.prisoncells.event.CellUnclaimEvent;
 import org.avaeriandev.api.util.BaseUtils;
 import org.avaeriandev.api.util.ByteDirection;
 import org.avaeriandev.titancore.TitanPlugin;
+import org.avaeriandev.titancore.modules.auction.AuctionModule;
+import org.avaeriandev.titancore.modules.auction.util.AuctionListing;
+import org.avaeriandev.titancore.modules.auction.util.AuctionSection;
+import org.avaeriandev.titancore.modules.auction.util.AuctionWard;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -18,57 +22,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-public class AuctionSystem implements Listener {
+public class AuctionCellListener implements Listener {
 
-    public static List<AuctionListing> listings = new ArrayList<>();
+    private final int MAX_LOCATION_ATTEMPTS = 10;
 
-    private final int chestAttemptTimeout = 10;
-
-    public static void load() {
-
-        try {
-
-            File auctionFile = new File(TitanPlugin.getInstance().getDataFolder(), "auction.yml");
-            if(!auctionFile.exists()) auctionFile.createNewFile();
-
-            Yaml yaml = new Yaml(new CustomClassLoaderConstructor(TitanPlugin.class.getClassLoader()));
-
-            List<Map<String, Object>> mappedListings = (List<Map<String, Object>>) yaml.load(new FileReader(auctionFile));
-            mappedListings.forEach(mappedListing -> listings.add(new AuctionListing(mappedListing)));
-
-            if(listings == null) listings = new ArrayList<>();
-
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void save() {
-        try {
-            File auctionFile = new File(TitanPlugin.getInstance().getDataFolder(), "auction.yml");
-
-            Yaml yaml = new Yaml();
-
-            List<Map<String, Object>> mappedListings = new ArrayList<>();
-            listings.forEach(listing -> mappedListings.add(listing.serialize()));
-
-            yaml.dump(mappedListings, new FileWriter(auctionFile));
-
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+    private AuctionModule auctionModule;
+    public AuctionCellListener() {
+        this.auctionModule = TitanPlugin.getModule(AuctionModule.class);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -177,7 +142,7 @@ public class AuctionSystem implements Listener {
                 System.out.println("Block at location " + randomX + ", " + randomY + ", " + randomZ + " is occupied! Attempting to find another location...");
 
                 if(attempts >= 10) {
-                    System.out.println("Failed to find a location after " + chestAttemptTimeout + " attempts.");
+                    System.out.println("Failed to find a location after " + MAX_LOCATION_ATTEMPTS + " attempts.");
                     return;
                 }
                 attempts++;
@@ -213,7 +178,7 @@ public class AuctionSystem implements Listener {
             sign.update();
 
             AuctionListing listing = new AuctionListing(chest.getBlock(), sign.getBlock(), price);
-            listings.add(listing);
+            auctionModule.getListings().add(listing);
 
         }
 

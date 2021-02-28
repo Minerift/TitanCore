@@ -1,4 +1,4 @@
-package org.avaeriandev.titancore.modules.auction;
+package org.avaeriandev.titancore.modules.auction.util;
 
 import org.avaeriandev.api.util.ByteDirection;
 
