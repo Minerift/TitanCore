@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.avaeriandev</groupId>
-    <name>TitanCore</name>
-    <artifactId>TitanCore</artifactId>
+    <name>VexarCore</name>
+    <artifactId>VexarCore</artifactId>
     <version>1.0.0</version>
     <description>TitanMC Core Plugin</description>
 

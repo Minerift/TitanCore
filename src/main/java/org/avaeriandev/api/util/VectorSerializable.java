@@ -1,4 +1,4 @@
-package org.avaeriandev.titancore.modules.auction.util;
+package org.avaeriandev.api.util;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.bukkit.util.Vector;
