@@ -1,7 +1,7 @@
 package org.avaeriandev.api.panel;
 
 import org.avaeriandev.api.util.BaseUtils;
-import org.vexar.titan.VexarPlugin;
+import org.minerift.titan.TitanPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,7 +32,7 @@ public abstract class Panel implements Listener {
 
     private void setup() {
         this.layout = new HashMap<>();
-        Bukkit.getPluginManager().registerEvents(this, VexarPlugin.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, TitanPlugin.getInstance());
     }
 
     protected void loadLayout(Map<Integer, PanelIcon> rawLayout) {
