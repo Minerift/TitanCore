@@ -1,10 +1,9 @@
 package org.minerift.titan.modules.tools;
 
 import org.avaeriandev.api.util.ItemBuilder;
-import org.minerift.titan.modules.tools.handlers.*;
-import org.vexar.titan.modules.tools.handlers.*;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.minerift.titan.modules.tools.handlers.*;
 
 public enum CustomToolEnum {
 
