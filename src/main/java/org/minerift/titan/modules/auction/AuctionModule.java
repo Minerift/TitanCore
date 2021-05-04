@@ -15,8 +15,7 @@ import java.util.List;
 
 public class AuctionModule extends Module {
 
-    private static final ObjectMapper mapper = new ObjectMapper()
-            .configure(SerializationFeature.INDENT_OUTPUT, true);
+    private static final ObjectMapper MAPPER = new ObjectMapper().configure(SerializationFeature.INDENT_OUTPUT, true);
     private List<AuctionListing> listings = new ArrayList<>();
 
     @Override
@@ -24,7 +23,7 @@ public class AuctionModule extends Module {
         // Read from file
         try {
             File auctionFile = getFileFromFormat();
-            this.listings = auctionFile.length() != 0 ? mapper.readValue(auctionFile, mapper.getTypeFactory().constructCollectionType(List.class, AuctionListing.class)) : new ArrayList<>();
+            this.listings = auctionFile.length() != 0 ? MAPPER.readValue(auctionFile, MAPPER.getTypeFactory().constructCollectionType(List.class, AuctionListing.class)) : new ArrayList<>();
         } catch(IOException e) {
             e.printStackTrace();
         }
@@ -39,7 +38,7 @@ public class AuctionModule extends Module {
         // Write to file
         try {
             File auctionFile = getFileFromFormat();
-            mapper.writeValue(auctionFile, listings);
+            MAPPER.writeValue(auctionFile, listings);
         } catch (IOException exception) {
             exception.printStackTrace();
         }
