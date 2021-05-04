@@ -22,10 +22,9 @@ import java.util.*;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class TitanProfile {
 
+    // Handle TitanProfile loading
     private static final ObjectMapper MAPPER = new ObjectMapper().configure(SerializationFeature.INDENT_OUTPUT, true);
     private static BiMap<OfflinePlayer, TitanProfile> plrDictionary = HashBiMap.create();
-
-    private final GemShopModule GEM_SHOP_MODULE = TitanPlugin.getModule(GemShopModule.class);
 
     public static TitanProfile get(OfflinePlayer plr) {
         return plrDictionary.get(plr);
@@ -97,6 +96,10 @@ public class TitanProfile {
         return saveFile;
     }
 
+    // Module references
+    @JsonIgnore
+    private final GemShopModule GEM_SHOP_MODULE = TitanPlugin.getModule(GemShopModule.class);
+
     @JsonIgnore
     private OfflinePlayer plr = null;
 
@@ -153,7 +156,23 @@ public class TitanProfile {
         return slotPurchases;
     }
 
+    @JsonIgnore
+    public int getLocalGemShopVersion() {
+        return gemShopVersion;
+    }
+
+    @JsonIgnore
     public void updateGemShopData() {
-        // TODO rewrite
+        // Update gem shop version
+        gemShopVersion = GEM_SHOP_MODULE.getVersion();
+
+        // Reset slot purchases
+        slotPurchases = new int[GEM_SHOP_MODULE.getSlotCount()];
+        Arrays.fill(slotPurchases, 0);
+    }
+
+    @JsonIgnore
+    public boolean canPurchase(int slot) {
+        return slotPurchases[slot] < GEM_SHOP_MODULE.getMaxSlotPurchases();
     }
 }
