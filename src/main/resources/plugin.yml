@@ -1,4 +1,4 @@
-main: org.avaeriandev.titancore.TitanPlugin
+main: org.minerift.titan.TitanPlugin
 name: ${project.name}
 version: ${project.version}
 author: AvaerianDev
@@ -31,3 +31,5 @@ commands:
     description: Debug command for dynamite
   magnet:
     description: Command to toggle magnet ability
+  gemshop:
+    description: Access the gem shop panel
