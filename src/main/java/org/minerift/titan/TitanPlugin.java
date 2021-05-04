@@ -8,14 +8,13 @@ import org.minerift.titan.api.external.Placeholders;
 import org.minerift.titan.commands.*;
 import org.minerift.titan.listeners.*;
 import org.minerift.titan.modules.Module;
-import org.minerift.titan.modules.tools.ToolCommand;
-import org.vexar.titan.commands.*;
-import org.vexar.titan.listeners.*;
 import org.minerift.titan.modules.auction.AuctionModule;
 import org.minerift.titan.modules.commissary.CommissaryModule;
 import org.minerift.titan.modules.enchanter.EnchanterCommand;
 import org.minerift.titan.modules.explosives.ExplosiveListener;
+import org.minerift.titan.modules.gemshop.GemShopModule;
 import org.minerift.titan.modules.quest.QuestModule;
+import org.minerift.titan.modules.tools.ToolCommand;
 import org.minerift.titan.modules.warden.WardenCommand;
 
 import java.io.File;
@@ -34,12 +33,13 @@ public class TitanPlugin extends JavaPlugin {
         instance = this;
         modules = new HashMap<>();
         plrDataDir = new File(instance.getDataFolder(), "playerData");
-        if(!plrDataDir.exists()) plrDataDir.mkdir();
+        if(!plrDataDir.exists()) plrDataDir.mkdirs();
 
         // Register modules
         registerModule(new AuctionModule());
         registerModule(new CommissaryModule());
         registerModule(new QuestModule());
+        registerModule(new GemShopModule());
 
         // Register other listeners
         registerListener(new PlayerJoinListener());
