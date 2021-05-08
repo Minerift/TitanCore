@@ -156,6 +156,10 @@ public class TitanProfile {
         return slotPurchases;
     }
 
+    public void setSlotPurchases(int[] slotPurchases) {
+        this.slotPurchases = slotPurchases;
+    }
+
     @JsonIgnore
     public int getLocalGemShopVersion() {
         return gemShopVersion;

@@ -1,6 +1,7 @@
 package org.minerift.titan.listeners;
 
 import org.avaeriandev.api.util.BaseUtils;
+import org.bukkit.Bukkit;
 import org.minerift.titan.TitanPlugin;
 import org.minerift.titan.TitanProfile;
 import org.bukkit.Material;
@@ -29,6 +30,7 @@ public class PlayerJoinListener implements Listener {
 
         // Give player first-join bread (if eligible)
         if(!plr.hasPlayedBefore()) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + plr.getName() + " group add E4");
             plr.getInventory().addItem(new ItemStack(Material.BREAD, 5));
         }
 

@@ -3,10 +3,10 @@ package org.minerift.titan.modules.gemshop;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.minerift.titan.TitanPlugin;
+import org.minerift.titan.modules.gemshop.offers.GemShopOffer;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class GemShopData {

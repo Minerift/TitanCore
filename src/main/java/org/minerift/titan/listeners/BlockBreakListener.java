@@ -7,6 +7,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import de.tr7zw.nbtapi.NBTItem;
 import org.avaeriandev.api.util.WorldGuardUtils;
+import org.bukkit.Bukkit;
 import org.minerift.titan.TitanProfile;
 import org.minerift.titan.modules.tools.CustomToolEnum;
 import org.minerift.titan.modules.tools.MagnetHandler;
@@ -37,7 +38,7 @@ public class BlockBreakListener implements Listener {
         MagnetHandler magnetHandler = new MagnetHandler(titanProfile) {
             @Override
             protected void useDefaultHandler(Block block, List<ItemStack> customDrops, boolean countForGems) {
-                // Do nothing; let Minecraft handle
+                customDrops.forEach(drop -> Bukkit.getWorld("Titan").dropItem(block.getLocation(), drop));
             }
         };
 

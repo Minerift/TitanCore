@@ -8,12 +8,10 @@ import org.minerift.titan.TitanPlugin;
 import org.minerift.titan.TitanProfile;
 import org.minerift.titan.modules.Module;
 import org.minerift.titan.modules.gemshop.commands.GemShopCommand;
+import org.minerift.titan.modules.gemshop.offers.GemShopOffer;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
 
 public class GemShopModule extends Module {
 

@@ -59,6 +59,7 @@ public class TitanPlugin extends JavaPlugin {
 
         registerCommand("speed", new SpeedCommand());
         registerCommand("haste", new HasteCommand());
+        registerCommand("nv", new NightvisionCommand());
         registerCommand("magnet", new MagnetCommand());
 
         // Register placeholders

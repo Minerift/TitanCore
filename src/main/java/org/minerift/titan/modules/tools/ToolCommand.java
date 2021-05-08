@@ -29,14 +29,7 @@ public class ToolCommand implements CommandExecutor {
         CustomToolEnum tool = CustomToolEnum.valueOf(args[0]);
         Player plr = Bukkit.getPlayer(args[1]);
 
-        ItemStack toolItem = tool.getTool();
-
-        NBTItem nbtItem = new NBTItem(toolItem);
-        nbtItem.setString("ToolType", tool.name());
-
-        toolItem = nbtItem.getItem();
-
-        plr.getInventory().addItem(toolItem);
+        plr.getInventory().addItem(tool.getWorkingTool());
 
         return true;
     }

@@ -1,5 +1,6 @@
 package org.minerift.titan.modules.tools;
 
+import de.tr7zw.nbtapi.NBTItem;
 import org.avaeriandev.api.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -50,8 +51,14 @@ public enum CustomToolEnum {
         this.handler = handler;
     }
 
-    public ItemStack getTool() {
+    public ItemStack getRawTool() {
         return tool;
+    }
+
+    public ItemStack getWorkingTool() {
+        NBTItem nbtItem = new NBTItem(tool);
+        nbtItem.setString("ToolType", this.name());
+        return nbtItem.getItem();
     }
 
     public AbstractHandler getHandler() {

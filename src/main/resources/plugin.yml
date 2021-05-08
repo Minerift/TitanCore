@@ -27,6 +27,9 @@ commands:
     description: Toggles the speed effect for Titan players
   haste:
     description: Toggles the haste effect for Titan players
+  nv:
+    aliases: ["nightvision"]
+    description: Toggles the nightvision effect for Mastermind players
   dynamite:
     description: Debug command for dynamite
   magnet:

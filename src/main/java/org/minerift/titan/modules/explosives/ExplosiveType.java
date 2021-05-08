@@ -1,5 +1,6 @@
 package org.minerift.titan.modules.explosives;
 
+import de.tr7zw.nbtapi.NBTItem;
 import org.avaeriandev.api.util.ItemBuilder;
 import org.minerift.titan.modules.explosives.handlers.DynamiteHandler;
 import org.bukkit.Material;
@@ -15,13 +16,13 @@ public enum ExplosiveType {
         new DynamiteHandler()
     ),
 
-    TITANMITE(
+    /*INFINIMITE(
         new ItemBuilder(new ItemStack(Material.TNT))
-            .setName("&8[&c&lTITANMITE&8]")
+            .setName("&8[&c&lINFINIMITE&8]")
             .create(),
             5F,
         new DynamiteHandler()
-    )
+    )*/
 
     // Cluster bomb
     // Atom bomb
@@ -38,8 +39,15 @@ public enum ExplosiveType {
         this.handler = handler;
     }
 
-    public ItemStack getItem() {
+    public ItemStack getRawItem() {
         return item;
+    }
+
+    public ItemStack getWorkingItem() {
+        NBTItem nbtItem = new NBTItem(new ItemStack(this.item));
+        nbtItem.setString("explosive", this.name());
+
+        return nbtItem.getItem();
     }
 
     public ExplosiveHandler getHandler() {

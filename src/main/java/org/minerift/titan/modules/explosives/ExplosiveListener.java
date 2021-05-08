@@ -160,7 +160,7 @@ public class ExplosiveListener implements Listener {
         if(dynamite.getType() != EntityType.PRIMED_TNT) { return; }
 
         // Verify that primed TNT is dynamite
-        if(!dynamite.hasMetadata("explosive")) { return; }
+        if(!isCustomExplosive(dynamite)) { return; }
 
         e.setCancelled(true);
     }

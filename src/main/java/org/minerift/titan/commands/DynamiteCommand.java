@@ -21,7 +21,7 @@ public class DynamiteCommand implements CommandExecutor {
         Player plr = Bukkit.getPlayer(args[1]);
         int amount = Integer.valueOf(args[2]);
 
-        ItemStack item = new ItemBuilder(explosiveType.getItem().clone()).setAmount(amount).create();
+        ItemStack item = new ItemBuilder(explosiveType.getRawItem().clone()).setAmount(amount).create();
         NBTItem nbtItem = new NBTItem(item);
 
         nbtItem.setString("explosive", explosiveType.name());
