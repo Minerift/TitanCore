@@ -56,7 +56,7 @@ public enum GemShopOffer {
                     .setAmount(32)
                     .create(),
             25,
-            new ItemOfferScript(new ItemStack(ExplosiveType.DYNAMITE.getWorkingItem()))
+            new ItemOfferScript(new ItemBuilder(new ItemStack(ExplosiveType.DYNAMITE.getWorkingItem())).setAmount(64).create())
     ),
 
     X64_DYNAMITE(
@@ -65,7 +65,7 @@ public enum GemShopOffer {
                     .setAmount(64)
                     .create(),
             50,
-            new ItemOfferScript(new ItemStack(ExplosiveType.DYNAMITE.getWorkingItem()))
+            new ItemOfferScript(new ItemBuilder(new ItemStack(ExplosiveType.DYNAMITE.getWorkingItem())).setAmount(64).create())
     ),
 
     // Money
